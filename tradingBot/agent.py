@@ -13,4 +13,5 @@ class TradingAgent:
         self.invertory = []
         
     def act(self, state, action_size):
+        
         return random.randrange(1,action_size)

@@ -17,7 +17,7 @@ class TradingEnv(gym.Env):
         self.agent = TradingAgent()
         
         # 데이터
-        self.data = utils.get_stock_data('tradingBot/data/data.csv') # 데이터 가져오기
+        self.data = utils.get_data('tradingBot/data/data.csv') # 데이터 가져오기
         self.data_length = len(self.data) # 데이터의 길이 계산
         self.state_size = len(self.data.columns)
         
@@ -68,18 +68,21 @@ class TradingEnv(gym.Env):
             # 다음 시점에서 가격이 올랐을 경우 - 보상
             # 다음 시점에서 가격이 내렸을 경우 + 보상
             self.reward = self.state['Close'] - self.next_state['Close']
+            
             return self.reward
         # LONG 보상 계산
         elif action == 1:
             # 다음 시점에서 가격이 올랐을 경우 + 보상
             # 다음 시점에서 가격이 내렸을 경우 - 보상
             self.reward = self.next_state['Close'] - self.state['Close']
+            
             return self.reward
         # SHORT 보상 계산
         elif action == 2:
             # 다음 시점에서 가격이 올랐을 경우 + 보상
             # 다음 시점에서 가격이 내렸을 경우 - 보상
             self.reward = self.state['Close'] - self.next_state['Close']
+            
             return self.reward
     
     # 진행 상황 시각화
