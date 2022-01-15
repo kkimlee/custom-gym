@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Apr  6 17:48:58 2021
-
-@author: user
-"""
 import gym
 from tradingBot.agent import TradingAgent
 import tradingBot.utils as utils

@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Apr  7 21:11:22 2021
-
-@author: user
-"""
-
 import random
 
 class TradingAgent:
