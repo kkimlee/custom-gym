@@ -17,9 +17,9 @@ class TradingEnv(gym.Env):
         self.agent = TradingAgent()
         
         # 데이터
-        self.stock_data = utils.get_stock_data('tradingBot/data/data.csv') # 주식 데이터 가져오기
-        self.data_length = len(self.stock_data) # 주식 데이터의 길이 계산
-        self.state_size = len(self.stock_data.columns) # 지표 개수 계산
+        self.data = utils.get_stock_data('tradingBot/data/data.csv') # 데이터 가져오기
+        self.data_length = len(self.data) # 데이터의 길이 계산
+        self.state_size = len(self.data.columns)
         
         # 행동
         self.action_size = 3 # 0: HOLD, 1: LONG, 2: SHORT
@@ -27,7 +27,7 @@ class TradingEnv(gym.Env):
         
         # 상태
         self.t = 0 # 시간
-        self.state = self.stock_data.iloc[self.t] # 상태
+        self.state = self.data.iloc[self.t] # 상태
         self.done = False # 끝 체크
         
     def step(self):
@@ -39,10 +39,10 @@ class TradingEnv(gym.Env):
         agent_act = self.agent.act(self.state, self.action_size)
         
         # 다음 시점의 데이터 읽어오기
-        self.next_state = self.stock_data.iloc[self.t+1]
+        self.next_state = self.data.iloc[self.t+1]
         
         # agent의 행동에 대한 보상 계산
-        self.reward = self.act(agent_act)
+        self.reward = self.actResult(agent_act)
         
         # 시각화
         self.render()
@@ -62,7 +62,7 @@ class TradingEnv(gym.Env):
         return self.state, self.reward, self.done, info
     
     # 행동
-    def act(self, action):
+    def actResult(self, action):
         # HOLD 보상 계산
         if action == 0:
             # 다음 시점에서 가격이 올랐을 경우 - 보상
