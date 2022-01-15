@@ -4,18 +4,20 @@ Created on Tue Apr  6 17:48:58 2021
 
 @author: user
 """
-import pandas as pd
-import utils
 import gym
-from gym import spaces
+from tradingBot.agent import TradingAgent
+import tradingBot.utils as utils
 
 class TradingEnv(gym.Env):
     # 초기화
     def __init__(self):
         super(TradingEnv, self).__init__()
         
-        # 주식 데이터
-        self.stock_data = utils.get_stock_data('SS.csv') # 주식 데이터 가져오기
+        # 플레이어
+        self.agent = TradingAgent()
+        
+        # 데이터
+        self.stock_data = utils.get_stock_data('tradingBot/data/data.csv') # 주식 데이터 가져오기
         self.data_length = len(self.stock_data) # 주식 데이터의 길이 계산
         self.state_size = len(self.stock_data.columns) # 지표 개수 계산
         

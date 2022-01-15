@@ -7,7 +7,7 @@ Created on Wed Apr  7 21:11:22 2021
 
 import random
 
-class Agent:
+class TradingAgent:
     def __init__(self):
         self.asset = 100000
         self.invertory = []
