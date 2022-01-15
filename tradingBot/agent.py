@@ -11,9 +11,6 @@ class TradingAgent:
     def __init__(self):
         self.asset = 100000
         self.invertory = []
-    
-    def get_state(self, state):
-        self.state = state
-    
-    def act(self):
-        return random.randrange(1,3)
+        
+    def act(self, state, action_size):
+        return random.randrange(1,action_size)

@@ -30,15 +30,20 @@ class TradingEnv(gym.Env):
         self.state = self.stock_data.iloc[self.t] # 상태
         self.done = False # 끝 체크
         
-    def step(self, action):
+    def step(self):
         # 끝이면 그냥 종료
         if self.done:
             return
         
+        # 플레이어 행동
+        agent_act = self.agent.act(self.state, self.action_size)
+        
         # 다음 시점의 데이터 읽어오기
         self.next_state = self.stock_data.iloc[self.t+1]
+        
         # agent의 행동에 대한 보상 계산
-        self.reward = self.act(action)
+        self.reward = self.act(agent_act)
+        
         # 시각화
         self.render()
         
@@ -51,11 +56,12 @@ class TradingEnv(gym.Env):
         # 디버깅을 위한 정보
         info = None
         
+        # 다음 상태로 변화
         self.state = self.next_state
         
-        return [self.state, self.next_state], self.reward, self.done, info
+        return self.state, self.reward, self.done, info
     
-    # 행동에 대한 보상
+    # 행동
     def act(self, action):
         # HOLD 보상 계산
         if action == 0:
